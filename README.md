@@ -6,7 +6,7 @@ Most of the time the Electron just works, happily connecting and disconnecting f
 
 This experiment is some code that might help recover from this situation automatically, and also log some data to better figure out what's actually happening, so if it's a bug, it can just be fixed so special code won't be necessary in the future.
 
-The code is not designed to be a drop in replacement for anything, but a set of tools you can copy and paste into your code to help add fault tolerance to your app. You can also just flash [electronsample.cpp] (https://github.com/rickkas7/electronsample/electronsample.cpp) to an Electron and run it for fun.
+The code is not designed to be a drop in replacement for anything, but a set of tools you can copy and paste into your code to help add fault tolerance to your app. You can also just flash [electronsample.cpp] (https://github.com/rickkas7/electronsample/blob/master/electronsample.cpp) to an Electron and run it for fun.
 
 The latest version of this project is here:
 [https://github.com/rickkas7/electronsample] (https://github.com/rickkas7/electronsample)
