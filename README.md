@@ -13,7 +13,7 @@ The latest version of this project is here:
 
 ## Using the Connection Event Log
 
-This code sets aside a small portion (522 bytes) of retained memoury for the connection event log. This allows various events and debugging information to be saved across restarts and uploaded via Particle.publish once a cloud connection has finally been made.
+This code sets aside a small portion (522 bytes) of retained memory for the connection event log. This allows various events and debugging information to be saved across restarts and uploaded via Particle.publish once a cloud connection has finally been made.
 
 It shows when cellular and cloud connectivity was established or lost, along with timestamps and many other things of interest.
 
@@ -31,7 +31,7 @@ The fields are:
 
 3. The event type, in this case it's 1, `CONNECTION_EVENT_CELLULAR_READY`.
 
-4. The event data, 1, which means celluar just went up. It would be 0 if cellular went down.
+4. The event data, 1, which means cellular just went up. It would be 0 if cellular went down.
 
 Each record is separated by a semicolon.
 
@@ -79,7 +79,7 @@ Enters an infinite loop to test the application watchdog. Takes 60 seconds to ac
 particle call electron2 testerFn "sleep deep"
 ```
 
-Enters `SLEEP_MODE_DEEP` for 30 seconds. This turns off the cellular modem, so it will reconnect (blinking green) after waking up. You can also specify the number of seconds in the 3rd parameter; if not specfied the default is 30.
+Enters `SLEEP_MODE_DEEP` for 30 seconds. This turns off the cellular modem, so it will reconnect (blinking green) after waking up. You can also specify the number of seconds in the 3rd parameter; if not specified the default is 30.
 
 
 ```
