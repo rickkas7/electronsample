@@ -254,10 +254,10 @@ void smartReboot(int reason, bool forceResetModem) {
 // help log the current state for debugging purposes.
 // It returns true to force a modem reset immediately, false to use the normal logic for whether to reset the modem.
 bool cloudConnectDebug() {
-	int res = Cellular.command(PING_TIMEOUT, "AT+UPING=8.8.8.8\r\n");
+	int res = Cellular.command(PING_TIMEOUT, "AT+UPING=\"8.8.8.8\"\r\n");
 	connectionEventAdd(CONNECTION_EVENT_PING_DNS, res);
 
-	res = Cellular.command(PING_TIMEOUT, "AT+UPING=api.particle.io\r\n");
+	res = Cellular.command(PING_TIMEOUT, "AT+UPING=\"api.particle.io\"\r\n");
 	connectionEventAdd(CONNECTION_EVENT_PING_API, res);
 
 	// If pinging api.particle.io does not succeed, then reboot the modem right away
