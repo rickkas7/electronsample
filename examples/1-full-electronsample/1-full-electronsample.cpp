@@ -69,6 +69,13 @@ void setup() {
 	//
 	Serial.begin(9600);
 
+	// If you're battery powered, it's a good idea to enable this. If a cellular or cloud connection cannot
+	// be made, a full modem reset is first done. If that doesn't resolve the problem, on the second and
+	// subsequent failures, the Electron will sleep for this many seconds. The intention is to set it to
+	// maybe 10 - 20 minutes so if there is a problem like SIM paused or a network or cloud failure, the
+	// Electron won't continuously try and fail to connect, depleting the battery.
+	// connectionCheck.withFailureSleepSec(15 * 60);
+
 	// We store connection events in retained memory. Do this early because things like batteryCheck will generate events.
 	connectionEvents.setup();
 

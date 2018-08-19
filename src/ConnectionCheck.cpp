@@ -4,8 +4,14 @@
 
 ConnectionCheck *ConnectionCheck::instance;
 
+retained ConnectionCheckRetainedData ConnectionCheck::connectionCheckRetainedData;
+
 ConnectionCheck::ConnectionCheck()  {
 	instance = this;
+	if (connectionCheckRetainedData.magic != CONNECTION_CHECK_MAGIC) {
+		connectionCheckRetainedData.magic = CONNECTION_CHECK_MAGIC;
+		connectionCheckRetainedData.numFailures = 0;
+	}
 }
 ConnectionCheck::~ConnectionCheck() {
 
@@ -34,7 +40,11 @@ void ConnectionCheck::loop() {
 		ConnectionEvents::addEvent(ConnectionEvents::CONNECTION_EVENT_CLOUD_CONNECTED, isCloudConnected);
 		Log.info("cloud connection %s", isCloudConnected ? "up" : "down");
 
-		if (!isCloudConnected) {
+		if (isCloudConnected) {
+			// Upon succesful connection, clear the failure count
+			connectionCheckRetainedData.numFailures = 0;
+		}
+		else {
 			// Cloud just disconnected, start measuring how long we've been disconnected
 			cloudCheckStart = millis();
 		}
@@ -48,6 +58,20 @@ void ConnectionCheck::loop() {
 			if (isCellularReady) {
 				// Generate events about the state of the connection before rebooting.
 				cloudConnectDebug();
+			}
+
+			// Keep the number of failures in a retained variable
+			connectionCheckRetainedData.numFailures++;
+
+			if (failureSleepSec > 0 && connectionCheckRetainedData.numFailures > 1) {
+				// failureSleepSec has been set to a non-zero value, so sleep for that
+				// many seconds after the first fullModemReset.
+				// This is useful when battery powered if the SIM has been paused or something
+				// is wrong with the SIM data or cloud such that a connection can be made.
+				// It sleeps for some period (maybe 10 - 15 minutes?) before trying again to
+				// avoid draining the battery continuously trying and failing to connect.
+				ConnectionEvents::addEvent(ConnectionEvents::CONNECTION_EVENT_FAILURE_SLEEP);
+				System.sleep(SLEEP_MODE_DEEP, failureSleepSec);
 			}
 
 			// Reboot

@@ -195,6 +195,10 @@ particle.listDevices({ auth:config.get('AUTH_TOKEN') }).then(
 							case 21:
 								msg = 'STOP_SLEEP_WAKE';
 								break;
+								
+							case 22:
+								msg = 'FAILURE_SLEEP';
+								break;
 							}
 							console.log(deviceName + ',' + dateStr + ',' + millisStr + ',' + msg);
 						}
