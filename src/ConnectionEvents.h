@@ -50,6 +50,9 @@ public:
 	void setup();
 	void loop();
 
+	bool canPublish();
+	void completedPublish();
+
 	void add(int eventCode, int data = 0);
 
 	static void addEvent(int eventCode, int data = 0);

@@ -27,6 +27,7 @@ void ConnectionEvents::setup() {
 		//
 		Log.info("initializing connection event retained memory");
 		connectionEventData.eventMagic = CONNECTION_EVENT_MAGIC;
+		connectionEventData.eventCount = 0;
 	}
 	add(CONNECTION_EVENT_SETUP_STARTED);
 
@@ -45,13 +46,8 @@ void ConnectionEvents::loop() {
 		return;
 	}
 
-	if (!Particle.connected()) {
-		// Not cloud connected, can't publish
-		return;
-	}
-
-	if (millis() - connectionEventLastSent < PUBLISH_MIN_PERIOD_MS) {
-		// Need to wait before sending again to avoid exceeding publish limits
+	if (!canPublish()) {
+		// Not time to publish yet
 		return;
 	}
 
@@ -83,8 +79,26 @@ void ConnectionEvents::loop() {
 	}
 
 	Particle.publish(connectionEventName, buf, PRIVATE);
+	completedPublish();
+}
+
+bool ConnectionEvents::canPublish() {
+	if (!Particle.connected()) {
+		// Not cloud connected, can't publish
+		return false;
+	}
+
+	if (millis() - connectionEventLastSent < PUBLISH_MIN_PERIOD_MS) {
+		// Need to wait before sending again to avoid exceeding publish limits
+		return false;
+	}
+	return true;
+}
+
+void ConnectionEvents::completedPublish() {
 	connectionEventLastSent = millis();
 }
+
 
 // Add a new event. This should only be called from the main loop thread.
 // Do not call from other threads like the system thread, software timer, or interrupt service routine.
