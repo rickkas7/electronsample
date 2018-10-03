@@ -2,6 +2,10 @@
 
 #include "ConnectionCheck.h"
 
+// This check is here so it can be a library dependency for a library that's compiled for both
+// cellular and Wi-Fi.
+#if Wiring_Cellular
+
 ConnectionCheck *ConnectionCheck::instance;
 
 retained ConnectionCheckRetainedData ConnectionCheck::connectionCheckRetainedData;
@@ -143,3 +147,4 @@ void ConnectionCheck::fullModemReset() {
 	System.sleep(SLEEP_MODE_DEEP, 10);
 }
 
+#endif // Wiring_Cellular
