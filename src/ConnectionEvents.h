@@ -3,6 +3,10 @@
 
 #include "Particle.h"
 
+// This check is here so it can be a library dependency for a library that's compiled for both
+// cellular and Wi-Fi.
+#if Wiring_Cellular
+
 // This code is used to track connection events, used mainly for debugging
 // and making sure this code works properly.
 const size_t CONNECTION_EVENTS_MAX_EVENTS = 32;
@@ -101,5 +105,5 @@ private:
 	static ConnectionEvents *instance;
 };
 
-
+#endif /* Wiring_Cellular */
 #endif /* __CONNECTIONEVENTS_H */
