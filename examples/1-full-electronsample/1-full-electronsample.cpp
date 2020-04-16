@@ -25,7 +25,7 @@ void startup() {
 	System.enableFeature(FEATURE_RETAINED_MEMORY);
 	System.enableFeature(FEATURE_RESET_INFO);
 }
-STARTUP(startup);
+STARTUP(startup());
 
 // System threaded mode is not required here, but it's a good idea with 0.6.0 and later.
 // https://docs.particle.io/reference/firmware/electron/#system-thread
