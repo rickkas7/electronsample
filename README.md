@@ -1,5 +1,8 @@
 # Electron Sample
 
+**WARNING** This library is no longer maintained, and many of the suggestions in here are already implemented in Device OS
+and using this library will conflict with modern versions of Device OS. You should not use this library.
+
 *Particle Electron sample code for fault tolerance and problem debugging*
 
 Most of the time the Electron just works, happily connecting and disconnecting from the cellular network and all is good. Except once in a while, some devices have a hard time getting reconnected. Disconnecting the battery and power usually solves the problem, but that can be a pain for remote devices.
