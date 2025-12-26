@@ -4,6 +4,10 @@
 
 #include "ConnectionEvents.h"
 
+// This check is here so it can be a library dependency for a library that's compiled for both
+// cellular and Wi-Fi.
+#if Wiring_Cellular
+
 // Note: The 1800 parameter is because the default stack size is too small in 0.7.0
 AppWatchdogWrapper::AppWatchdogWrapper(unsigned long timeoutMs) : wd(timeoutMs, watchdogCallback, 1800) {
 
@@ -22,3 +26,5 @@ void AppWatchdogWrapper::watchdogCallback() {
 	ConnectionEvents::addEvent(ConnectionEvents::CONNECTION_EVENT_APP_WATCHDOG);
 	System.reset();
 }
+
+#endif // Wiring_Cellular

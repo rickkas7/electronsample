@@ -1,6 +1,9 @@
 
 #include "ConnectionEvents.h"
 
+// This check is here so it can be a library dependency for a library that's compiled for both
+// cellular and Wi-Fi.
+#if Wiring_Cellular
 
 // This is where the retained memory is allocated. Currently 522 bytes.
 // There are checks in ConnectionsEvents::setup() to initialize it on first
@@ -127,5 +130,4 @@ void ConnectionEvents::addEvent(int eventCode, int data) {
 	}
 }
 
-
-
+#endif // Wiring_Cellular
